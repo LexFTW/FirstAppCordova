@@ -53,23 +53,34 @@
   </body>
   <script type="text/javascript">
     function addElement(){
-      var newLI = document.createElement("li");
-      newLI.className = "list-group-item";
-      var integer = 0;
+      var numId = 0;
 
-      $("li").each(function(index){
-        integer++;
-      })
-
-      var id = integer + "-item"
-      newLI.setAttribute("id", id)
+      numId = getListItemNumber();
 
       if(document.getElementById("getTextForList").value != ""){
-        var text = document.getElementById("getTextForList").value
-        newLI.innerHTML = text + "<button type='button' id='"+integer+"' class='btn btn-xs btn-primary float-right' onclick='deleteElem(this)'>Eliminar tarea</button>";
-        document.getElementById("list").appendChild(newLI)
-        document.getElementById("getTextForList").value = ""
+        createTaskElement(numId);
       }
+    }
+
+    function getListItemNumber(){
+      var integer = 0;
+      $("li").each(function(index){
+        integer++;
+      });
+
+      return integer;
+    }
+
+    function createTaskElement(numId){
+      var newLI = document.createElement("li");
+      newLI.className = "list-group-item";
+      var id = numId + "-item"
+      newLI.setAttribute("id", id)
+
+      var text = document.getElementById("getTextForList").value
+      newLI.innerHTML = text + "<button type='button' id='" + numId + "' class='btn btn-xs btn-primary float-right' onclick='deleteElem(this)'>Eliminar tarea</button>";
+      document.getElementById("list").appendChild(newLI)
+      document.getElementById("getTextForList").value = ""
     }
 
     function deleteElem(index){
